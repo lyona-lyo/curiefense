@@ -205,14 +205,14 @@ def update_t3_counters(t2_dict, acc_avg):
             # Find average for collected values. The last one will be the right number for the whole period.
             key = f"{proxy}-{app}-{profile}-{branch}-{valid_name}"
             collect_values(acc_avg, key, counter_value)
-            counter.labels(*labels).set(choose_func(counter_type)(acc_avg[key]))
+            counter.labels(*labels).inc(choose_func(counter_type)(acc_avg[key]))
         elif counter_type in [MAX_PER_REQUEST, AVG_PER_REQUEST]:
             for value in counter_value:
                 # Collect all and get max/mean. Group by intervals of values.
                 group = _get_numbers_group(value["key"])
                 key = f"{proxy}-{app}-{profile}-{branch}-{valid_name}-{group}"
                 collect_values(acc_avg, key, value["value"])
-                counter.labels(*labels, group).set(
+                counter.labels(*labels, group).inc(
                     choose_func(counter_type)(acc_avg[key])
                 )
         elif counter_type == COUNTER_BY_KEY:
