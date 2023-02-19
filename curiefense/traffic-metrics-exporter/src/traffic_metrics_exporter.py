@@ -66,10 +66,7 @@ for name, counter_label in counters_format.items():
     type = counter_label["type"]
     label = counter_label.get("label")
     more_labels = [label] if label else []
-    if type in [REGULAR, COUNTER_BY_KEY, COUNTER_OBJECT_BY_KEY]:
-        t3_counters[counter_name] = Counter(counter_name, "", base_labels + more_labels)
-    elif type in [AVERAGE, MAX, MIN, MAX_PER_REQUEST, AVG_PER_REQUEST]:
-        t3_counters[counter_name] = Gauge(counter_name, "", base_labels + more_labels)
+    t3_counters[counter_name] = Counter(counter_name, "", base_labels + more_labels)
 
 q = Queue()
 
